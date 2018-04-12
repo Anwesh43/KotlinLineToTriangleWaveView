@@ -88,6 +88,7 @@ class LineToTriWaveView (ctx : Context) : View(ctx) {
             val size : Float = (w / (3 * Math.sqrt(2.0).toFloat()))
             paint.strokeWidth = Math.min(w, h)/65
             paint.strokeCap = Paint.Cap.ROUND
+            paint.color = Color.parseColor("#4A148C")
             var x : Float =  - size * Math.sqrt(2.0).toFloat()
             canvas.save()
             canvas.translate(w/2, h/2)
