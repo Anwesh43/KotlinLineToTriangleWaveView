@@ -76,4 +76,39 @@ class LineToTriWaveView (ctx : Context) : View(ctx) {
             }
         }
     }
+
+    data class LineToTriWave (var i : Int, private val state : State = State()) {
+
+        fun draw(canvas : Canvas, paint : Paint) {
+            val w : Float = canvas.width.toFloat()
+            val h : Float = canvas.height.toFloat()
+            val size : Float = (w / (3 * Math.sqrt(2.0).toFloat()))
+            paint.strokeWidth = Math.min(w, h)/65
+            paint.strokeCap = Paint.Cap.ROUND
+            var x : Float =  - size * Math.sqrt(2.0).toFloat()
+            canvas.save()
+            canvas.translate(w/2, h/2)
+            for (i in 0..2) {
+                canvas.save()
+                canvas.translate(x * state.scales[1], -size/2)
+                for (j in 0..1) {
+                    canvas.save()
+                    canvas.rotate(45f * (1 - 2 * j) * state.scales[2])
+                    canvas.drawLine(0f, 0f, 0f, size * state.scales[0], paint)
+                    canvas.restore()
+                }
+                canvas.restore()
+            }
+            canvas.restore()
+        }
+
+        fun update(stopcb : (Float) -> Unit) {
+            state.update(stopcb)
+        }
+
+        fun startUpdating(startcb : () -> Unit) {
+            state.startUpdating(startcb)
+        }
+
+    }
 }
