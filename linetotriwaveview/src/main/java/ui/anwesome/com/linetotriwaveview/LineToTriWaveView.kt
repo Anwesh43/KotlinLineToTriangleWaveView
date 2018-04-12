@@ -4,6 +4,7 @@ package ui.anwesome.com.linetotriwaveview
  * Created by anweshmishra on 13/04/18.
  */
 
+import android.app.Activity
 import android.content.Context
 import android.view.View
 import android.view.MotionEvent
@@ -134,6 +135,14 @@ class LineToTriWaveView (ctx : Context) : View(ctx) {
             lineToTriWave.startUpdating {
                 animator.start()
             }
+        }
+    }
+
+    companion object {
+        fun create(activity : Activity) : LineToTriWaveView {
+            val view : LineToTriWaveView = LineToTriWaveView(activity)
+            activity.setContentView(view)
+            return view
         }
     }
 
