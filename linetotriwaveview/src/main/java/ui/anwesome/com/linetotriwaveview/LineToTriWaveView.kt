@@ -102,7 +102,7 @@ class LineToTriWaveView (ctx : Context) : View(ctx) {
                     canvas.restore()
                 }
                 canvas.restore()
-                x += Math.sqrt(2.0).toFloat() * size 
+                x += Math.sqrt(2.0).toFloat() * size
             }
             canvas.restore()
             x
