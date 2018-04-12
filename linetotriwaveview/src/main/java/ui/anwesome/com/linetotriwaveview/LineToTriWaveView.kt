@@ -111,4 +111,28 @@ class LineToTriWaveView (ctx : Context) : View(ctx) {
         }
 
     }
+
+    data class Renderer(var view : LineToTriWaveView) {
+
+        private val animator : Animator = Animator(view)
+
+        private val lineToTriWave : LineToTriWave = LineToTriWave(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(Color.parseColor("#212121"))
+            lineToTriWave.draw(canvas, paint)
+            animator.animate {
+                lineToTriWave.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            lineToTriWave.startUpdating {
+                animator.start()
+            }
+        }
+    }
+
 }
