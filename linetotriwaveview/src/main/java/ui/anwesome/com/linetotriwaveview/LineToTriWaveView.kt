@@ -24,4 +24,28 @@ class LineToTriWaveView (ctx : Context) : View(ctx) {
         }
         return true
     }
+
+    data class State (var prevScale : Float = 0f, var dir : Float = 0f, var j : Int = 0) {
+        val scales : Array<Float> = arrayOf(0f, 0f, 0f)
+        fun update(stopcb : (Float) -> Unit) {
+            scales[j] += 0.1f * dir
+            if (Math.abs(scales[j] - prevScale) > 1) {
+                this.scales[j] = this.prevScale + dir
+                this.j += this.dir.toInt()
+                if (this.j == scales.size || this.j == -1) {
+                    this.j -= this.dir.toInt()
+                    this.dir = 0f
+                    this.prevScale = this.scales[j]
+                    stopcb(this.prevScale)
+                }
+            }
+        }
+
+        fun startUpdating(startcb : () -> Unit) {
+            if (this.dir == 0f) {
+                this.dir = 1 - 2 * this.prevScale
+                startcb()
+            }
+        }
+    }
 }
